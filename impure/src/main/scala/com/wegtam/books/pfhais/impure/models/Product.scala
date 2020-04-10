@@ -11,8 +11,11 @@
 
 package com.wegtam.books.pfhais.impure.models
 
-import cats.data.NonEmptySet
+import java.util.UUID
+
 import io.circe._
+import cats.data._
+import cats.implicits._
 
 final case class Product(id: ProductId, names: NonEmptySet[Translation])
 
@@ -22,4 +25,25 @@ object Product {
 
   implicit val encode: Encoder[Product] =
     Encoder.forProduct2("id", "names")(p => (p.id, p.names))
+
+  /**
+    * Try to create a Product from the given list of database rows.
+    *
+    * @param rows The database rows describing a product and its translations.
+    * @return An option to the successfully created Product.
+    */
+  def fromDatabase(rows: Seq[(UUID, String, String)]): Option[Product] = {
+    val po = for {
+      (id, c, n) <- rows.headOption
+      t          <- Translation.fromUnsafe(c)(n)
+      p          <- Product(id = id, names = NonEmptySet.one[Translation](t)).some
+    } yield p
+    po.map(
+      p =>
+        rows.drop(1).foldLeft(p) { (a, cols) =>
+          val (_, c, n) = cols
+          Translation.fromUnsafe(c)(n).fold(a)(t => a.copy(names = a.names.add(t)))
+        }
+    )
+  }
 }

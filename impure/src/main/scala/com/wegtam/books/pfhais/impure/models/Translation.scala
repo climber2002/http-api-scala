@@ -27,4 +27,14 @@ object Translation {
     def compare(x: Translation, y: Translation): Int =
       x.lang.compare(y.lang)
   }
+
+  /**
+    * Try to create an instance of a Translation from unsafe input data.
+    *
+    * @param lang A string that must contain a valid LanguageCode.
+    * @param name A string that must contain a valid ProductName.
+    * @return An option to the successfully created Translation.
+    */
+  def fromUnsafe(lang: String)(name: String): Option[Translation] =
+    Some(Translation(lang, name))
 }
