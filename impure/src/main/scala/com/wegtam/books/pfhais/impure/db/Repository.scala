@@ -15,8 +15,8 @@ import java.util.UUID
 
 import cats.data.NonEmptyList
 import com.wegtam.books.pfhais.impure.models.{ Product, ProductId, Translation }
-import slick.basic.{ DatabaseConfig, DatabasePublisher }
-import slick.jdbc.JdbcProfile
+import slick.basic._
+import slick.jdbc._
 
 import scala.concurrent.Future
 
