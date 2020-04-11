@@ -144,7 +144,7 @@ def compilerSettings(sv: String) =
 	"-Ywarn-extra-implicit",
 	"-Ywarn-numeric-widen",
 	//"-Ywarn-unused:implicits",
-	"-Ywarn-unused:imports",
+//	"-Ywarn-unused:imports",
 	//"-Ywarn-unused:locals",
 	//"-Ywarn-unused:params",
 	"-Ywarn-unused:patvars",
@@ -186,7 +186,7 @@ def compilerSettings(sv: String) =
       "-Yno-adapted-args",
       "-Ypartial-unification",
       "-Ywarn-numeric-widen",
-      "-Ywarn-unused-import",
+//      "-Ywarn-unused-import",
       "-Ywarn-value-discard"
     )
   }
